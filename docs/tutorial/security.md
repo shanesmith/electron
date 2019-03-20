@@ -713,17 +713,35 @@ shell.openExternal('https://example.com/index.html')
 
 ## 15) Disable the `remote` module
 
-The `remote` module provides a simple way for the renderer processes to access APIs normally only available in the main process. Using it, a renderer can invoke methods of a main process object without explicitly sending inter-process messages. If your desktop application does not run untrusted content, this is a very elegant way to have your renderer processes access and work with modules that are only available to the main process, such as GUI-related modules (dialog, menu etc.).
+The `remote` module provides a simple way for the renderer processes to
+access APIsnormally only available in the main process. Using it, a
+renderer can invoke methods of a main process object without explicitly sending
+inter-process messages. If your desktop application does not run untrusted
+content, this is a very elegant way to have your renderer processes access and
+work with modules that are only available to the main process, such as
+GUI-related modules (dialog, menu etc.).
 
-However, if your app can run untrusted content and even if you [sandbox][sandbox] your renderer processes accordingly, the `remote` module makes it easy for malicious code to escape the sandbox and have access to system resources via the higher privileges of the main process. Therefore, it should be disabled in such circumstances.
+However, if your app can run untrusted content and even if you
+[sandbox][sandbox] your renderer processes accordingly, the `remote` module
+makes it easy for malicious code to escape the sandbox and have access to
+system resources via the higher privileges of the main process. Therefore,
+it should be disabled in such circumstances.
 
 ### Why?
 
-`remote` uses an internal IPC channel to communicate with the main process. "Prototype pollution" attacks can grant malicious code access to the internal IPC channel, which can then be used to escape the sandbox by mimicking `remote` IPC messages and getting access to main process modules running with higher privileges.
+`remote` uses an internal IPC channel to communicate with the main process.
+"Prototype pollution" attacks can grant malicious code access to the internal
+IPC channel, which can then be used to escape the sandbox by mimicking `remote`
+IPC messages and getting access to main process modules running with higher
+privileges.
 
-Additionally, if you're not careful, preload scripts may leak modules to a sandboxed renderer. Leaking `remote` arms malicious code with a multitude of main process modules with which to perform an attack.
+Additionally, if you're not careful, preload scripts may leak modules to a
+sandboxed renderer. Leaking `remote` arms malicious code with a multitude
+of main process modules with which to perform an attack.
 
-Disabling the `remote` module eliminates these attack vectors. Enabling context isolation also prevents the "prototype pollution" attacks from succeeding.
+Disabling the `remote` module eliminates these attack vectors. Enabling
+context isolation also prevents the "prototype pollution" attacks from
+succeeding.
 
 ### How?
 
@@ -753,11 +771,20 @@ const mainWindow = new BrowserWindow({
 
 ## 16) Filter the `remote` module
 
-If you cannot disable the `remote` module, you should filter the globals, node and electron modules (so-called built-ins) accessible via `remote` that your application does not require. This can be done by blocking certain modules entirely and by replacing others with proxies that expose only the functionality that your app needs.
+If you cannot disable the `remote` module, you should filter the globals,
+node and electron modules (so-called built-ins) accessible via `remote`
+that your application does not require. This can be done by blocking
+certain modules entirely and by replacing others with proxies that
+expose only the functionality that your app needs.
 
 ### Why?
 
-Due to the system access privileges of the main process, functionality provided by the main process modules may be dangerous in the hands of malicious code running in a compromised renderer process. By limiting the set of accessible modules to the minimum that your app needs and filtering out the others, you reduce the toolset that malicious code can use to attack the system.
+Due to the system access privileges of the main process, functionality
+provided by the main process modules may be dangerous in the hands of
+malicious code running in a compromised renderer process. By limiting
+the set of accessible modules to the minimum that your app needs and
+filtering out the others, you reduce the toolset that malicious code
+can use to attack the system.
 
 ### How?
 
