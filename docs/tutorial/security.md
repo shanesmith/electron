@@ -789,7 +789,7 @@ can use to attack the system.
 ### How?
 
 ```js
-const readOnlyFsProxy = require(/*...*/)  //  exposes only file read functionality
+const readOnlyFsProxy = require(/* ... */) // exposes only file read functionality
 
 const allowedModules = new Set(['crypto'])
 const proxiedModules = new Map(['fs', readOnlyFsProxy])
