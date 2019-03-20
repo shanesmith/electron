@@ -77,9 +77,10 @@ steps:
     DISPLAY: ":99.0"
 
 - bash: |
+    export CROSS_ARCH_SNAPSHOTS=$PWD/src/out/Default/cross-arch-snapshots
     cd src
     echo Verify cross arch snapshot
-    python electron/script/verify-mksnapshot.py --source-root "$PWD" --build-dir out/Default --snapshot-files-dir $PWD/src/out/Default/cross-arch-snapshots
+    python electron/script/verify-mksnapshot.py --source-root "$PWD" --build-dir out/Default --snapshot-files-dir $CROSS_ARCH_SNAPSHOTS
   displayName: Verify cross arch snapshot
   timeoutInMinutes: 5
   env:
