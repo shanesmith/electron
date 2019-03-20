@@ -713,7 +713,7 @@ shell.openExternal('https://example.com/index.html')
 
 The `remote` module provides a simple way for the renderer processes to access APIs normally only available in the main process. Using it, a renderer can invoke methods of a main process object without explicitly sending inter-process messages. If your desktop application does not run untrusted content, this is a very elegant way to have your renderer processes access and work with modules that are only available to the main process, such as GUI-related modules (dialog, menu etc.).
 
-However, if your app can run untrusted content and even if you sandbox your renderer processes accordingly, the `remote` module makes it easy for malicious code to escape the sandbox and have access to system resources via the higher privileges of the main process. Therefore, it should be disabled in such circumstances.
+However, if your app can run untrusted content and even if you [sandbox][sandbox] your renderer processes accordingly, the `remote` module makes it easy for malicious code to escape the sandbox and have access to system resources via the higher privileges of the main process. Therefore, it should be disabled in such circumstances.
 
 ### Why?
 
@@ -808,3 +808,4 @@ app.on('remote-get-guest-web-contents', (event, webContents, guestWebContents) =
 [new-window]: ../api/web-contents.md#event-new-window
 [will-navigate]: ../api/web-contents.md#event-will-navigate
 [open-external]: ../api/shell.md#shellopenexternalurl-options-callback
+[sandbox]: ../api/sandbox-option.md
