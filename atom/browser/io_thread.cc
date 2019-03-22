@@ -38,6 +38,9 @@ void IOThread::Init() {
   std::unique_ptr<network::URLRequestContextBuilderMojo> builder =
       std::make_unique<network::URLRequestContextBuilderMojo>();
 
+  // Enable file:// support.
+  builder->set_file_enabled(true);
+
   auto cert_verifier = std::make_unique<net::CachingCertVerifier>(
       std::make_unique<net::MultiThreadedCertVerifier>(
           net::CertVerifyProc::CreateDefault()));
