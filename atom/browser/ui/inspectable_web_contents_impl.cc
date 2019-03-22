@@ -410,7 +410,7 @@ void InspectableWebContentsImpl::CallClientFunction(
   }
   javascript.append(");");
   GetDevToolsWebContents()->GetMainFrame()->ExecuteJavaScript(
-      base::UTF8ToUTF16(javascript));
+      base::UTF8ToUTF16(javascript), base::NullCallback());
 }
 
 gfx::Rect InspectableWebContentsImpl::GetDevToolsBounds() const {
@@ -457,7 +457,8 @@ void InspectableWebContentsImpl::LoadCompleted() {
     }
     base::string16 javascript = base::UTF8ToUTF16(
         "Components.dockController.setDockSide(\"" + dock_state_ + "\");");
-    GetDevToolsWebContents()->GetMainFrame()->ExecuteJavaScript(javascript);
+    GetDevToolsWebContents()->GetMainFrame()->ExecuteJavaScript(
+        javascript, base::NullCallback());
   }
 
   if (view_->GetDelegate())
@@ -719,7 +720,8 @@ void InspectableWebContentsImpl::DispatchProtocolMessage(
   if (message.length() < kMaxMessageChunkSize) {
     base::string16 javascript =
         base::UTF8ToUTF16("DevToolsAPI.dispatchMessage(" + message + ");");
-    GetDevToolsWebContents()->GetMainFrame()->ExecuteJavaScript(javascript);
+    GetDevToolsWebContents()->GetMainFrame()->ExecuteJavaScript(
+        javascript, base::NullCallback());
     return;
   }
 
