@@ -873,7 +873,8 @@ void InspectableWebContentsImpl::DidFinishNavigation(
                                    base::GenerateGUID().c_str());
   // Invoking content::DevToolsFrontendHost::SetupExtensionsAPI(frame, script);
   // should be enough, but it seems to be a noop currently.
-  frame->ExecuteJavaScriptForTests(base::UTF8ToUTF16(script));
+  frame->ExecuteJavaScriptForTests(base::UTF8ToUTF16(script),
+                                   base::NullCallback());
 }
 
 void InspectableWebContentsImpl::OnURLFetchComplete(
