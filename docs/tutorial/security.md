@@ -714,12 +714,12 @@ shell.openExternal('https://example.com/index.html')
 ## 15) Disable the `remote` module
 
 The `remote` module provides a simple way for the renderer processes to
-access APIsnormally only available in the main process. Using it, a
+access APIs normally only available in the main process. Using it, a
 renderer can invoke methods of a main process object without explicitly sending
 inter-process messages. If your desktop application does not run untrusted
 content, this is a very elegant way to have your renderer processes access and
 work with modules that are only available to the main process, such as
-GUI-related modules (dialog, menu etc.).
+GUI-related modules (dialogs, menus, etc.).
 
 However, if your app can run untrusted content and even if you
 [sandbox][sandbox] your renderer processes accordingly, the `remote` module
@@ -748,7 +748,7 @@ succeeding.
 Sandboxed renderers
 
 ```js
-// Bad
+// Bad if the renderer can run untrusted content
 const mainWindow = new BrowserWindow({})
 ```
 
@@ -762,7 +762,7 @@ const mainWindow = new BrowserWindow({
 ```
 
 ```html
-<!-- Bad -->
+<!-- Bad if the renderer can run untrusted content  -->
 <webview src="page.html"></webview>
 
 <!-- Good -->
@@ -772,7 +772,7 @@ const mainWindow = new BrowserWindow({
 ## 16) Filter the `remote` module
 
 If you cannot disable the `remote` module, you should filter the globals,
-node and electron modules (so-called built-ins) accessible via `remote`
+Node, and Electron modules (so-called built-ins) accessible via `remote`
 that your application does not require. This can be done by blocking
 certain modules entirely and by replacing others with proxies that
 expose only the functionality that your app needs.
